@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float movementSpeed = 1;
-    public float collisionoffset = 0.05f;
+    public float collisionoffset = 0.02f;
     public ContactFilter2D contactFilter;
 
     private Rigidbody2D rb;
@@ -17,32 +17,54 @@ public class PlayerController : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        if(movementInput != Vector2.zero)
+        if (movementInput != Vector2.zero)
         {
-            int count = rb.Cast(
-                movementInput,
-                contactFilter,
-                collisions,
-                movementSpeed * Time.fixedDeltaTime + collisionoffset);
+            bool isMoving = TryMove(movementInput);
 
-            if(count == 0)
+            if(!isMoving)
             {
-                rb.MovePosition(rb.position + movementInput * movementSpeed * Time.fixedDeltaTime);
+                // Check if movement along X-axis is possible during collision
+                isMoving = TryMove(new Vector2(movementInput.x, 0));
 
+                if (!isMoving)
+                {
+                    // Check if movement along Y-axis is possible during collision if X-axis is false
+                    isMoving = TryMove(new Vector2(0, movementInput.y));
+                }
             }
         }
     }
 
+    private bool TryMove(Vector2 direction)
+    {
+        int count = rb.Cast(
+                direction, // X and Y vals between -1,1 to determine which direction player intends to move
+                contactFilter, // Collision settings that species certain parameters on specific layers 
+                collisions, // Raycast collision detection 
+                movementSpeed * Time.fixedDeltaTime + collisionoffset); // Cast amount based off movement and offset
+
+        if (count == 0)
+        {
+            rb.MovePosition(rb.position + direction * movementSpeed * Time.fixedDeltaTime); // Apply movement to rb
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        
+    }
+
     void OnMove(InputValue movementVal)
     {
-        movementInput = movementVal.Get<Vector2>();
+        movementInput = movementVal.Get<Vector2>(); // Get movement via Vector 2
     }
 }
