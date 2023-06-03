@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
     private Vector2 movementInput;
+    private Animator animator;
+    private SpriteRenderer spriterender;
 
     private List<RaycastHit2D> collisions = new List<RaycastHit2D>();
 
@@ -20,11 +22,14 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        spriterender = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     private void FixedUpdate()
     {
+        // Movement 
         if (movementInput != Vector2.zero)
         {
             bool isMoving = TryMove(movementInput);
@@ -40,9 +45,40 @@ public class PlayerController : MonoBehaviour
                     isMoving = TryMove(new Vector2(0, movementInput.y));
                 }
             }
+            // Set animation based off direction of vector
+            if(movementInput.x > 0.01)
+            {
+                animator.SetFloat("Horizontal", movementInput.x);
+                animator.SetFloat("Speed", movementInput.sqrMagnitude);
+            }
+            if (movementInput.x < 0.01)
+            {
+                animator.SetFloat("Horizontal", movementInput.x);
+                animator.SetFloat("Speed", movementInput.sqrMagnitude);
+            }
+            if (movementInput.y < 0.01)
+            {
+                animator.SetFloat("Vertical", movementInput.y);
+                animator.SetFloat("Speed", movementInput.sqrMagnitude);
+            }
+            if (movementInput.y > 0.01)
+            {
+                animator.SetFloat("Vertical", movementInput.y);
+                animator.SetFloat("Speed", movementInput.sqrMagnitude);
+            }
+        }
+
+        // Set direction to sprite (Left or Right)
+        if(movementInput.x < 0)
+        {
+            spriterender.flipX = true;
+        } else if(movementInput.x > 0)
+        {
+            spriterender.flipX = false;
         }
     }
 
+    // Raycast to check for collision
     private bool TryMove(Vector2 direction)
     {
         int count = rb.Cast(
@@ -63,6 +99,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    // Gets direction of vector
     void OnMove(InputValue movementVal)
     {
         movementInput = movementVal.Get<Vector2>(); // Get movement via Vector 2
