@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frameomni direction 
     private void FixedUpdate()
     {
-        if(canMove)
+        if (canMove)
         {
             // Movement 
             if (movementInput != Vector2.zero)
@@ -83,13 +83,13 @@ public class PlayerController : MonoBehaviour
                 spriterender.flipX = false;
             }
         }
-       
+
     }
 
     // Raycast to check for collision
     private bool TryMove(Vector2 direction)
     {
-        if(direction != Vector2.zero)
+        if (direction != Vector2.zero)
         {
             int count = rb.Cast(
                 direction, // X and Y vals between -1,1 to determine which direction player intends to move
@@ -111,8 +111,8 @@ public class PlayerController : MonoBehaviour
         {
             return false;
         }
-        
-        
+
+
     }
 
     // Gets direction of vector
@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour
     {
         lockMovement();
 
-        if(spriterender.flipX == true)
+        if (spriterender.flipX == true)
         {
             swordAttack.attackLeft();
         }

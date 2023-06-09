@@ -3,17 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
-{
+{ 
+    private Animator animator;
+    public float health = 10f;
 
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
     public float Health
     {
         set
         {
             print(value);
             health = value;
-            if(health <= 0)
+            
+            if(health <= 1)
             {
-                defeated();
+                dying();
             }
         }
         get
@@ -22,11 +29,23 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public float health = 1f;
+    private void dying()
+    {
+        animator.SetBool("Dead", true);
+    }
 
-
-    public void defeated()
+    private void dead()
     {
         Destroy(gameObject);
     }
+
+    private void OnHit(float damage)
+    {
+        Debug.Log("Slime hit for " + damage);
+        Health -= damage;
+        animator.SetTrigger("Damage");
+    }
+
+
+    
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SwordAttack : MonoBehaviour
 {
-    public float damage = 3f;
+    public float damage = 1.5f;
    
     public Collider2D swordCollider;
     Vector2 rightAttackOffset;
@@ -34,17 +34,13 @@ public class SwordAttack : MonoBehaviour
         swordCollider.enabled = false;
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        collision.collider.SendMessage("OnHit", damage);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Enemy")
-        {
-            // Deal Damage
-            Enemy enemy = collision.GetComponent<Enemy>();
-
-            if(enemy != null)
-            {
-                enemy.Health -= damage;
-            }
-        }
+        collision.SendMessage("OnHit", damage);
     }
 }
