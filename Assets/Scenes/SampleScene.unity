@@ -485,25 +485,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &441776718 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8351833672816444387, guid: 2c3c8dfdef5e28d499c2cb3fdcab478a, type: 3}
-  m_PrefabInstance: {fileID: 627150820107788044}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &441776721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 441776718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1e74ff6170991248ac6dd468edd72e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 3
-  swordCollider: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1154,6 +1135,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2787277777791339756, guid: 930460dcb539afd47b082261194e3a7c, type: 3}
+      propertyPath: health
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 4847754630926262093, guid: 930460dcb539afd47b082261194e3a7c, type: 3}
       propertyPath: m_BodyType
       value: 1
@@ -5403,8 +5388,5 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8351833672816444387, guid: 2c3c8dfdef5e28d499c2cb3fdcab478a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 441776721}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c3c8dfdef5e28d499c2cb3fdcab478a, type: 3}

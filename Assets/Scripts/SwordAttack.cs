@@ -5,6 +5,7 @@ using UnityEngine;
 public class SwordAttack : MonoBehaviour
 {
     public float damage = 1.5f;
+    public float knockBackForce = 500f;
    
     public Collider2D swordCollider;
     Vector2 rightAttackOffset;
@@ -41,6 +42,22 @@ public class SwordAttack : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        collision.SendMessage("OnHit", damage);
+        IDamageable damageable = collision.GetComponent<IDamageable>();
+
+        if(damageable != null)
+        {
+            Vector3 parentPosition = gameObject.GetComponentInParent<Transform>().position;
+
+            Vector2 direction = (Vector2)(collision.gameObject.transform.position - parentPosition ).normalized;
+            Vector2 knockback = direction * knockBackForce;
+
+            // collision.SendMessage("OnHit", damage, knockback);
+            damageable.OnHit(damage, knockback);
+        }
+        else
+        {
+            Debug.Log("Collider does not implement IDamageable");
+        }
+       
     }
 }
