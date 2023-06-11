@@ -5,8 +5,10 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, IDamageable
 { 
     private Animator animator;
+    public PlayerHealth playerHealth;
     private Rigidbody2D rb;
     public float health = 10f;
+    public float damage = 2f;
 
     private void Start()
     {
@@ -56,4 +58,17 @@ public class Enemy : MonoBehaviour, IDamageable
         Debug.Log("Slime hit for " + damage);
         Debug.Log("Force: " + knockback);
     }
+
+
+    // ADD DAMAGE TO PLAYER 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            playerHealth.takeDamage(damage);
+            Debug.Log("Damge taken: " + damage);
+        }
+    }
+
+
 }

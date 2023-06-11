@@ -10,5 +10,5 @@ public interface IDamageable
 
     public void OnHit(float damage);
 
-    public void DestroySelf();
+    public void DestroySelf();   
 }

@@ -46,7 +46,7 @@ public class SwordAttack : MonoBehaviour
 
         if(damageable != null)
         {
-            Vector3 parentPosition = gameObject.GetComponentInParent<Transform>().position;
+            Vector3 parentPosition = transform.parent.position;
 
             Vector2 direction = (Vector2)(collision.gameObject.transform.position - parentPosition ).normalized;
             Vector2 knockback = direction * knockBackForce;
